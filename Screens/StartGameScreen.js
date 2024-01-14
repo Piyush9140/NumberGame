@@ -1,8 +1,26 @@
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
+import React, { useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
 
-const StartGameScreen = () => {
+const StartGameScreen = ({ OnPickedNum }) => {
+  const [enterNum, SetEnterNum] = useState("");
+  console.log(enterNum);
+  function NumInputHandler(enteredText) {
+    SetEnterNum(enteredText);
+  }
+  function ResetInputHandler() {
+    SetEnterNum("");
+  }
+  function confirmInputHandler() {
+    const chosenNum = parseInt(enterNum);
+    if (isNaN(chosenNum) || chosenNum <= 0 || chosenNum > 99) {
+      Alert.alert(
+        "Invalid Number",
+        "Number has to be a number between 1 to 99",
+        [{ text: "Okay", style: "destructive", onPress: ResetInputHandler }]
+      );
+    } else OnPickedNum(chosenNum);
+  }
   return (
     <View style={styles.InputContainer}>
       <TextInput
@@ -11,9 +29,17 @@ const StartGameScreen = () => {
         keyboardType="number-pad"
         autoCapitalize="none"
         autoCorrect={false}
+        value={enterNum}
+        onChangeText={NumInputHandler}
       ></TextInput>
-      <PrimaryButton>Reset</PrimaryButton>
-      <PrimaryButton>Confirm</PrimaryButton>
+      <View style={styles.buttonsContainer}>
+        <View style={styles.buttonContainer}>
+          <PrimaryButton onPress={ResetInputHandler}>Reset</PrimaryButton>
+        </View>
+        <View style={styles.buttonContainer}>
+          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+        </View>
+      </View>
     </View>
   );
 };
@@ -25,7 +51,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: "#4e0329",
+    backgroundColor: "#3b021f",
     borderRadius: 8,
     elevation: 4,
   },
@@ -39,5 +65,12 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderBottomWidth: 2,
     borderBottomColor: "#ddb52f",
+    alignSelf: "center",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });
