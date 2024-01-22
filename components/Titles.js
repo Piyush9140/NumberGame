@@ -4,7 +4,7 @@ import colors from '../constants/colors'
 
 const Titles = ({children}) => {
   return (
-    <View>
+    <View style={styles.width}>
       <Text  style={styles.TextStyle} >{children}</Text>
     </View>
   )
@@ -22,5 +22,9 @@ const styles = StyleSheet.create({
         textAlign:'center',
         padding:12,
         
+        
        },
+       width:{
+        paddingHorizontal:15,
+       }
 })
