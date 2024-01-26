@@ -32,6 +32,8 @@ export default function App() {
     setRoundCount(0);
   }
   return (
+    <>
+    <StatusBar style="light"/>
     <LinearGradient colors={[colors.primary700,colors.accent500]} style={styles.container}>
       <ImageBackground
         source={require("./assets/images/background.png")}
@@ -44,7 +46,9 @@ export default function App() {
         </SafeAreaView>
       </ImageBackground>
     </LinearGradient>
+    </>
   );
+
 }
 
 const styles = StyleSheet.create({
